@@ -1,7 +1,7 @@
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
 
-export const getBookingByUserId = async () => {
+export const getBookinsByHotelOwnerId = async () => {
   try {
     const { userId } = auth();
 
@@ -11,7 +11,7 @@ export const getBookingByUserId = async () => {
 
     const bookings = await prismadb.booking.findMany({
       where: {
-        userId,
+        hotelOwnerId: userId,
       },
       include: {
         Room: true,

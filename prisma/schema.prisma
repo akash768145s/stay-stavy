@@ -1,15 +1,12 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["fullTextSearch","fullTextIndex"]
-}
-
 datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 model Hotel {
@@ -30,12 +27,12 @@ model Hotel {
   shopping            Boolean   @default(false)
   freeParking         Boolean   @default(false)
   bikeRental          Boolean   @default(false)
-  freeWiFi            Boolean   @default(false)
+  freeWifi            Boolean   @default(false)
   movieNights         Boolean   @default(false)
-  swimmingpool        Boolean   @default(false)
+  swimmingPool        Boolean   @default(false)
   coffeeShop          Boolean   @default(false)
   addedAt             DateTime  @default(now())
-  updatedAt           DateTime  @default(now())
+  updatedAT           DateTime  @default(now())
   rooms               Room[]
   bookings            Booking[]
 
@@ -43,55 +40,56 @@ model Hotel {
 }
 
 model Room {
-    id              String      @id @default(uuid())
-    title           String
-    description     String      @db.LongText
-    bedCount        Int         @default(0)
-    guestCount      Int         @default(0)
-    bathroomCount   Int         @default(0)
-    kingBed         Int         @default(0)
-    queenBed        Int         @default(0)
-    image           String      
-    breakFastPrice  Int
-    zoomPrice       Int
-    roomService     Boolean     @default(false)
-    tv              Boolean     @default(false)
-    balcony         Boolean     @default(false)
-    freeWifi        Boolean     @default(false)
-    cityView        Boolean     @default(false)
-    oceanView       Boolean     @default(false)
-    forestView      Boolean     @default(false)
-    mountainView    Boolean     @default(false)
-    airCondition    Boolean     @default(false)
-    soundProofed    Boolean     @default(false)
-    hotel           Hotel?      @relation(fields: [hotelId], references: [id],onDelete: Cascade)
-    hotelId         String
+  id             String  @id @default(uuid())
+  title          String
+  description    String  @db.LongText
+  bedCount       Int     @default(0)
+  guestCount     Int     @default(0)
+  bathroomCount  Int     @default(0)
+  kingBed        Int     @default(0)
+  queenBed       Int     @default(0)
+  image          String
+  breakFastPrice Int
+  roomPrice      Int
+  roomService    Boolean @default(false)
+  TV             Boolean @default(false)
+  balcony        Boolean @default(false)
+  freeWifi       Boolean @default(false)
+  cityView       Boolean @default(false)
+  oceanView      Boolean @default(false)
+  forestView     Boolean @default(false)
+  mountainView   Boolean @default(false)
+  airCondition   Boolean @default(false)
+  soundProofed   Boolean @default(false)
+  hotelId        String
 
-    Booking Booking[]
+  Hotel Hotel? @relation(fields: [hotelId], references: [id], onDelete: Cascade)
 
-    @@index ([hotelId])
+  Booking Booking[]
+
+  @@index([hotelId])
 }
 
-
 model Booking {
-  id      String  @id @default(uuid())
-  userName String
-  userEmail String
-  userId String
-  roomId String
-  hotelId String
-  hotelOwnerId String
-  startDate DateTime
-  endDate DateTime
+  id                String   @id @default(uuid())
+  userName          String
+  userEmail         String
+  userId            String
+  roomId            String
+  hotelId           String
+  hotelOwnerId      String
+  startDate         DateTime
+  endDate           DateTime
   breakFastIncluded Boolean
-  currency String
-  totalPrice Int
-  paymentStatus Boolean @default(false)
-  paymentIntentId String @unique
-  bookedAt DateTime @default(now()) 
+  currency          String
+  totalPrice        Int
+  paymentStatus     Boolean  @default(false)
+  paymentIntentId   String   @unique
+  bookedAt          DateTime @default(now())
 
-  Hotel   Hotel?  @relation(fields: [hotelId], references: [id])
-  Room Room? @relation(fields: [roomId], references: [id])
-  @@index ([hotelId])
+  Hotel Hotel? @relation(fields: [hotelId], references: [id])
+  Room  Room?  @relation(fields: [roomId], references: [id])
+
+  @@index([hotelId])
   @@index([roomId])
 }

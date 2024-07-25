@@ -8,4 +8,5 @@ const HotelList = ({ hotels }: { hotels: HotelWithRooms[] }) => {
         </div>)}
     </div>);
 }
+
 export default HotelList;
